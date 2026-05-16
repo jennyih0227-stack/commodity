@@ -16,6 +16,75 @@
     min-height: 100vh;
     padding: 24px 16px;
   }
+
+  /* ── 密碼遮罩 ── */
+  #pw-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #1a3a6b, #0e2244);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 24px;
+  }
+  #pw-screen h2 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  #pw-screen p {
+    color: rgba(255,255,255,.7);
+    font-size: 13px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  #pw-box {
+    background: rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #pw-input {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-align: center;
+    outline: none;
+    background: #fff;
+    color: #1a3a6b;
+  }
+  #pw-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: none;
+    background: #fff;
+    color: #1a3a6b;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  #pw-btn:active { opacity: .85; }
+  #pw-err {
+    color: #ffb3b3;
+    font-size: 13px;
+    text-align: center;
+    min-height: 18px;
+  }
+
+  /* ── 主內容（預設隱藏） ── */
+  #main { display: none; width: 100%; max-width: 400px; }
   h1 {
     font-size: 20px;
     color: #1a3a6b;
@@ -34,7 +103,6 @@
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    max-width: 340px;
   }
   a.btn {
     display: block;
@@ -46,9 +114,7 @@
     font-size: 16px;
     line-height: 1.4;
     box-shadow: 0 4px 14px rgba(0,0,0,.12);
-    transition: transform .15s, box-shadow .15s;
   }
-  a.btn:active { transform: scale(.97); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
   a.btn-mobile {
     background: linear-gradient(135deg, #1a3a6b, #0e2244);
     color: #fff;
@@ -63,6 +129,20 @@
 </style>
 </head>
 <body>
+
+<!-- 密碼畫面 -->
+<div id="pw-screen">
+  <h2>凱基人壽保險商品導覽</h2>
+  <p>請輸入密碼以繼續</p>
+  <div id="pw-box">
+    <input id="pw-input" type="password" placeholder="請輸入密碼" autocomplete="off">
+    <button id="pw-btn" onclick="checkPW()">確認進入</button>
+    <div id="pw-err"></div>
+  </div>
+</div>
+
+<!-- 主內容 -->
+<div id="main">
   <h1>凱基人壽保險商品導覽</h1>
   <p class="sub">請選擇適合您裝置的版本</p>
   <div class="btn-group">
@@ -77,5 +157,34 @@
       <div class="btn-desc">字體較大，適合平板或電腦</div>
     </a>
   </div>
+</div>
+
+<script>
+  var _pw = 'QQ090';
+
+  // 同一瀏覽器 session 已驗證過就直接顯示
+  if (sessionStorage.getItem('kgi_auth') === '1') {
+    document.getElementById('pw-screen').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+  }
+
+  // Enter 鍵也能送出
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPW();
+  });
+
+  function checkPW() {
+    var val = document.getElementById('pw-input').value;
+    if (val === _pw) {
+      sessionStorage.setItem('kgi_auth', '1');
+      document.getElementById('pw-screen').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+    } else {
+      document.getElementById('pw-err').textContent = '❌ 密碼錯誤，請重新輸入';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+</script>
 </body>
 </html>
