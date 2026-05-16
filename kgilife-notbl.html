@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>凱基人壽保險商品總攬</title>
+<style>
+:root {
+  color-scheme: light;          /* 強制淺色，防 iPad 深色模式跑色 */
+  --red: #1a3a6b;
+  --red2: #0e2244;
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --border: #e2e6ea;
+  --sub: #666666;
+  --shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+  background: var(--bg);
+  color: #1a1a2e;
+  font-size: 17px;
+  -webkit-text-size-adjust: 100%;  /* 防 iOS 自動調整字體 */
+}
+
+/* ── Header ── */
+header {
+  background: linear-gradient(135deg, var(--red), var(--red2));
+  color: #fff;
+  padding: 18px 12px 12px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-logo {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60px;
+  width: auto;
+  border-radius: 6px;
+}
+.header-text { text-align: center; }
+header .sub { font-size: 14px; letter-spacing: 2px; opacity: .75; margin-bottom: 4px; }
+header h1 { font-size: 26px; font-weight: 800; }
+header p { font-size: 15px; opacity: .75; margin-top: 3px; }
+
+/* ── Tab (CSS-only radio) ── */
+.tabs-radio { display: none; }
+.tab-wrap {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  display: flex;
+}
+.tab-label {
+  flex: 1;
+  text-align: center;
+  padding: 10px 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sub);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+  user-select: none;
+}
+#t1:checked ~ .tab-wrap label[for="t1"],
+#t2:checked ~ .tab-wrap label[for="t2"],
+#t3:checked ~ .tab-wrap label[for="t3"],
+#t4:checked ~ .tab-wrap label[for="t4"],
+#t5:checked ~ .tab-wrap label[for="t5"],
+#t6:checked ~ .tab-wrap label[for="t6"] {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+.tab-content { display: none; padding: 14px; }
+#t1:checked ~ .tab-content.c1,
+#t2:checked ~ .tab-content.c2,
+#t3:checked ~ .tab-content.c3,
+#t4:checked ~ .tab-content.c4,
+#t5:checked ~ .tab-content.c5,
+#t6:checked ~ .tab-content.c6 { display: block; }
+
+/* ── Stats chips ── */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 5px 12px;
+  font-size: 14px;
+  color: var(--sub);
+}
+.chip strong { color: var(--red); }
+
+/* ── Section heading ── */
+.sec-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--red);
+  padding: 9px 14px;
+  background: #f0f4ff;
+  border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  margin: 18px 0 10px;
+}
+.sec-title .badge {
+  margin-left: auto;
+  background: var(--red);
+  color: #fff;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* ── Unique product name highlight ── */
+.prod-name {
+  color: #e65100 !important;
+  font-weight: 800 !important;
+}
+
+/* ── Product card using <details> ── */
+details {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 9px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+summary {
+  list-style: none;
+  padding: 14px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  outline: none;
+}
+summary::-webkit-details-marker { display: none; }
+.arrow {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--sub);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+details[open] .arrow { transform: rotate(180deg); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+
+.card-body { padding: 4px 0 6px; }
+.doc-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px dashed var(--border);
+}
+.doc-row:last-child { border-bottom: none; }
+.lbl {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.lbl-dm  { background: #fff3e0; color: #b84c00; }
+.lbl-cl  { background: #e8f5e9; color: #256029; }
+.doc-row a {
+  font-size: 15px;
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 10px;
+  background: #e8f0fe;
+  border-radius: 6px;
+  display: inline-block;
+}
+.no-dm { font-size: 14px; color: #bbb; }
+
+/* ── Route tag ── */
+.tag {
+  font-size: 13px;
+  background: #e8eaf6;
+  color: #3949ab;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* ── Currency / type tags ── */
+.tag-usd { font-size: 13px; background: #e3f2fd; color: #1565c0; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.tag-twd { font-size: 13px; background: #e8f5e9; color: #2e7d32; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.tag-aud { font-size: 13px; background: #fff3e0; color: #bf360c; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.tag-inv { font-size: 13px; background: #fce4ec; color: #880e4f; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+.lbl-code { background: #e3f2fd; color: #1565c0; }
+.lbl-date { background: #f3e5f5; color: #7b1fa2; }
+/* ── Group divider ── */
+.grp-title {
+  background: #1a1a2e;
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 18px 0 10px;
+  border-radius: 8px;
+  letter-spacing: .5px;
+}
+
+/* ── Annotation list ── */
+.annot-list {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.annot-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.annot-row:last-child { border-bottom: none; }
+.annot-name { font-size: 15px; flex: 1; }
+.annot-row a {
+  font-size: 14px;
+  color: #1a73e8;
+  background: #e8f5e9;
+  padding: 5px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+
+/* ── Overview table ── */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 10px; }
+.overview-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 560px;
+}
+.overview-tbl thead th {
+  background: var(--red);
+  color: #fff;
+  padding: 9px 8px;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.overview-tbl tbody tr:hover { background: #f0f4ff; }
+.overview-tbl td { padding: 7px 8px; border: 1px solid var(--border); vertical-align: middle; }
+.col-tab { font-weight: 700; font-size: 14px; text-align: center; white-space: nowrap; border-radius: 0; }
+.col-grp { font-size: 13px; color: #555; text-align: center; }
+.col-sec { font-size: 13px; font-weight: 600; text-align: center; }
+.col-name { font-size: 14px; line-height: 1.45; }
+.col-link { text-align: center; white-space: nowrap; }
+.col-link a {
+  display: inline-block;
+  font-size: 13px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 1px;
+}
+.col-link a[href*="/dm/"] { background: #fff3e0; color: #b84c00; }
+.col-link a[href*="/clause/"] { background: #e8f5e9; color: #256029; }
+.no-pdf { color: #ccc; font-size: 13px; }
+
+footer {
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  margin-top: 6px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-text">
+    <div class="sub">凱基人壽 KGI Life Insurance</div>
+    <h1>保險商品總攬</h1>
+    <p>醫療險｜意外險｜壽險｜投資型</p>
+  </div>
+  <img class="header-logo" src="data:image/png;base64,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" alt="熊誠毅 誠毅傳承">
+</header>
+
+<!-- CSS-only tabs -->
+<input class="tabs-radio" type="radio" name="tab" id="t1">
+<input class="tabs-radio" type="radio" name="tab" id="t2">
+<input class="tabs-radio" type="radio" name="tab" id="t3">
+<input class="tabs-radio" type="radio" name="tab" id="t4">
+<input class="tabs-radio" type="radio" name="tab" id="t5">
+<input class="tabs-radio" type="radio" name="tab" id="t6" checked>
+
+<div class="tab-wrap">
+  <label class="tab-label" for="t6">📊 總覽</label>
+  <label class="tab-label" for="t5">📈 投資型</label>
+  <label class="tab-label" for="t4">💰 壽險</label>
+  <label class="tab-label" for="t1">🏥 醫療</label>
+  <label class="tab-label" for="t2">🛡️ 意外</label>
+  <label class="tab-label" for="t3">🗂️ 其他</label>
+</div>
+
+<!-- ══════════════ 醫療險 ══════════════ -->
+<div class="tab-content c1">
+  <div class="chips">
+    <div class="chip">全部 <strong>33</strong> 件</div>
+    <div class="chip">長照/失能 <strong>6</strong></div>
+    <div class="chip">住院醫療 <strong>9</strong></div>
+    <div class="chip">癌症 <strong>5</strong></div>
+    <div class="chip">重大傷病 <strong>9</strong></div>
+    <div class="chip">手術 <strong>4</strong></div>
+  </div>
+
+  <!-- 長照 -->
+  <div class="sec-title">💚 長期照顧／失能照護 <span class="badge">6</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">溢享增心</span>長期照顧終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140201_mahuca_ag_11405.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuca.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">享安心</span>長期照顧終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140202_legohg_ag_11405.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legohg.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">享放心</span>長期照顧終身健康保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140204_majiyb_ag_11405.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiyb.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">享順心</span>長期照顧終身健康保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140227_mahuha_ag_1140812.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuha.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">心安心照護</span>終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140085_legoeh_ag.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoeh.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">智由行照護</span>終身保險(2020) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140089_legoye_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoye.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <!-- 住院醫療 -->
+  <div class="sec-title">🏨 住院醫療 <span class="badge">9</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">健康樂活醫療</span>終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140090_mahuab_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuab.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">元氣樂活</span>終身醫療健康保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140269_aahrl_ag_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahrl.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款(期滿)</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahrl_exp.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">安心樂高</span>終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140096_legoae_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoae.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">日日保</span>住院日額健康保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140116_legoqa_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoqa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">樂活雙享</span>住院醫療終身保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150124_abhsr_ag_1150416.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/abhsr.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">永享樂活</span>住院醫療定期保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140117_majidb_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majidb.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">心康泰</span>住院醫療限額給付健康保險附約 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140119_mahuga_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuga.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">超放心自負額</span>住院醫療健康保險附約 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140209__aahsr_ag_1140625.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahsr.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">新</span>住院醫療定額型定期健康保險附約(97) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/khlr.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <!-- 癌症 -->
+  <div class="sec-title">🎗️ 癌症 <span class="badge">5</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">新康健</span>終身防癌健康保險(97) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140098_mscn_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mscn.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">真康健</span>癌症定期健康保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140145__aaddc_ag_1140123.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aaddc.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">新活力</span>癌症定期健康保險附約 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140171__abddc_ag_1140123.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/abddc.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽好活力一年期防癌健康保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140101_majixa_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majixa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">新</span>癌症五年定期醫療保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiqa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <!-- 重大傷病 -->
+  <div class="sec-title">⚠️ 重大傷病／重大疾病 <span class="badge">9</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">醫卡幸福</span>重大傷病保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150087_mahuea_ag_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuea.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">醫卡新安</span>重大傷病終身健康保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140107_majizb_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majizb.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">真心守護</span>重大傷病保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150089_mahufb_ag_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahufb.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">醫卡守護</span>重大傷病定期健康保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140139_aaddm_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aaddm.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">醫卡健康一年期</span>重大傷病健康保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140109_majiea_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiea.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">重大疾病暨特定傷病</span>定期健康保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140120_yddr_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/yddr.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">重大疾病</span>終身健康保險附約(乙型) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legold.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">e同幸福一年期</span>重大疾病健康保險(甲型) <span class="tag">基富通</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddab.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">e同幸福</span>定期重大疾病健康保險(甲型) <span class="tag">基富通</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddba.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <!-- 手術 -->
+  <div class="sec-title">🔪 手術 <span class="badge">4</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">超術配</span>手術終身保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140252__mahuia_ag_1141012.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuia.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">安心</span>手術終身保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140112_majimc_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majimc.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">好術配</span>手術定期健康保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140114_majiua_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiua.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">真術配一年期</span>手術健康保險附約 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140211__aahop_ag_1140725.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahop.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+</div>
+
+<!-- ══════════════ 意外險 ══════════════ -->
+<div class="tab-content c2">
+  <div class="chips">
+    <div class="chip">全部 <strong>13</strong> 件</div>
+  </div>
+  <div class="sec-title">🛡️ 傷害險（意外險） <span class="badge">13</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">意百分</span>終身傷害暨兒童傷害失能保險 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150110_aaipa_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/aaipa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">一生平安</span>終身傷害暨兒童傷害失能保險 <span class="tag">經紀代理</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150126__abipa_br_1150412.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/abipa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">好多意</span>終身傷害暨兒童傷害失能保險附約 <span class="tag">業務通路</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150120_mahuja_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/mahuja.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">新鑫如意</span>終身保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150091_majipb_ag_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majipb.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">勇健人生</span>傷害暨兒童意外骨折保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM①</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1140138_aaspa_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-dm">DM②</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1140172_aaspa_11402.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/aaspa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">好平安</span>傷害保險附約(110) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1140123_majioa_ag_1140101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majioa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">人身意外</span>傷害保險(110) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150111_adipa_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/adipa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">人身意外</span>傷害保險附約(110) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150112_epaa_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/epaa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">安心寶貝意外</span>傷害保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150114_majifc_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majifc.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">安心寶貝意外</span>傷害保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majigc.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">安心寶貝意外</span>傷害失能保險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150115_majita_ag_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majita.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">E安心</span>傷害保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/iipa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">e國民</span>小額傷害保險附約 <span class="tag">基富通</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><span class="no-dm">無</span></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/mepaaa.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+</div>
+
+<!-- ══════════════ 附加條款 ══════════════ -->
+<div class="tab-content c3">
+  <div class="chips"><div class="chip">共 <strong>8</strong> 件附約條款</div></div>
+
+  <div class="sec-title">📋 附約條款</div>
+  <div class="annot-list">
+    <div class="annot-row"><span class="annot-name">凱基人壽人身意外傷害住院醫療定額給付附加條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/ml.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽心平安傷害醫療保險給付附加條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/mta.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽意外傷害一至六級傷害失能補償保險附加條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/apaed.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽人身意外傷害重大燒燙傷保險給付附加條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/z2.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽附約延續批註條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/zb1_01.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽附約保證續保批註條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/zb3.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽職業或職務變更批註條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/zb5.pdf" target="_blank">開啟 PDF ↗</a></div>
+    <div class="annot-row"><span class="annot-name">凱基人壽長期照顧分期保險金申領文件調整批註條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/annotation/zb6.pdf" target="_blank">開啟 PDF ↗</a></div>
+  </div>
+</div>
+
+<!-- ══════════════ 壽險 ══════════════ -->
+<div class="tab-content c4">
+  <div class="chips">
+    <div class="chip">全部 <strong>30</strong> 件</div>
+    <div class="chip">外幣保單 <strong>15</strong></div>
+    <div class="chip">台幣保單 <strong>15</strong></div>
+  </div>
+
+  <div class="grp-title">💵 外幣保單（15 件）</div>
+
+  <div class="sec-title">🔴 分紅保單 <span class="badge">2</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">紅運富御</span>美元分紅終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150131___1150501.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/appspl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">紅運傳家</span>美元終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150036.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apogpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">📈 利變型保單 <span class="badge">9</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">美利成臻</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150100_1150123r.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/appdpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">美利盈家</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150132_1150501.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apprpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫長鴻</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150096___11501.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apozpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">享美鑫</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150029_apoupl_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apoupl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">美鑽添壽</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150053_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/aponpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">美利傳富</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150044_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apojpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫多利</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150074_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apocpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">多保倍</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150023.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apndpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">傳承守富</span>美元利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150061_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/aplrpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">💎 利變型生存金保單 <span class="badge">3</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">金美年年</span>美元利率變動型終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150034.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apmzpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">享富年年</span>美元利率變動型終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150031_apmmpl_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apmmpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">悠退年年</span>美元利率變動型養老保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/rop/pldl1150057_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/rop/apnhpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">🇦🇺 澳幣保單 <span class="badge">1</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">澳享人生</span>澳幣終身壽險－定期給付型 <span class="tag tag-aud">AUD 澳幣</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/apompl.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apompl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="grp-title">🏦 台幣保單（15 件）</div>
+
+  <div class="sec-title">📈 利變型保單 <span class="badge">5</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫旺來</span>利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150081_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apnlpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫利567</span>利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150077_apkepl_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apkepl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">天天有利</span>利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150009.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apkqtl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">天天開鑫</span>利率變動型終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150012_apktpl_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apktpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫安利得</span>利率變動型終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150075__1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apwhpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">💎 利變型生存金保單 <span class="badge">1</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">年年168</span>利率變動型終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150025_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apnkpl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">💹 生存金保單 <span class="badge">2</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫享年年</span>終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150079___1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apoopl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">吉慶年年</span>終身保險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150022.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apnppl_.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">📄 一般保單 <span class="badge">7</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">基業長傳</span>終身壽險－定期給付型 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150055__1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apnapl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">傳富一生</span>終身壽險（定期給付型） <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150063.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/epxipl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">全民</span>小額終身壽險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150017_fhjipl_1150101.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/ehjipl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">公教</span>小額終身壽險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150007_fpfppl.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/epfppl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">好喜悅</span>定期壽險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/term-life/pldl1150086.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/term-life/aplhpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">好喜福</span>定期壽險附約 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/term-life/pldl1150086.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/term-life/apmhpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">友保障</span>終身壽險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150008.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/dpgjpl.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+</div>
+
+<!-- ══════════════ 投資型 ══════════════ -->
+<div class="tab-content c5">
+  <div class="chips">
+    <div class="chip">全部 <strong>8</strong> 件</div>
+    <div class="chip">變額壽險 <strong>4</strong></div>
+    <div class="chip">變額年金 <strong>4</strong></div>
+  </div>
+
+  <div class="grp-title">🏛️ 變額壽險（4 件）</div>
+
+  <div class="sec-title">📊 變額壽險 <span class="badge">3</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">活利鑫動</span>變額壽險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/aadesil_aadfsva_pldi1140057_ag_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/aadesil.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫鑫向榮</span>變額壽險（112） <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1150004_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/bcbcril.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫旺九九</span>變額壽險（112） <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1140054_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/cbzsil.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">💱 外幣變額壽險 <span class="badge">1</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫旺九九</span>外幣變額壽險（112） <span class="tag tag-usd">外幣</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1140054_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/cbafsil.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="grp-title">🗓️ 變額年金（4 件）</div>
+
+  <div class="sec-title">📅 變額年金 <span class="badge">3</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">活利鑫動</span>變額年金保險 <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/aadesil_aadfsva_pldi1140057_ag_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/aadfsva.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫旺九九</span>變額年金保險（112） <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1140055_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/bnaasva.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">智富三贏</span>變額年金保險(104) <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1150003_1150401.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/cnmrva.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+
+  <div class="sec-title">🌐 外幣變額年金 <span class="badge">1</span></div>
+
+  <details>
+    <summary>凱基人壽<span class="prod-name">鑫旺九九</span>外幣變額年金保險（112） <span class="tag tag-usd">外幣</span> <span class="arrow">▼</span></summary>
+    <div class="card-body">
+      <div class="doc-row"><span class="lbl lbl-dm">DM</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1140055_1141225.pdf" target="_blank">開啟 PDF ↗</a></div>
+      <div class="doc-row"><span class="lbl lbl-cl">條款</span><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/bnagsva.pdf" target="_blank">開啟 PDF ↗</a></div>
+    </div>
+  </details>
+</div>
+
+<!-- ══════════════ 總覽表 ══════════════ -->
+<div class="tab-content c6">
+  <div class="chips">
+    <div class="chip">全部 <strong>84</strong> 件</div>
+    <div class="chip">醫療險 <strong>33</strong></div>
+    <div class="chip">意外險 <strong>13</strong></div>
+    <div class="chip">壽險 <strong>30</strong></div>
+    <div class="chip">投資型 <strong>8</strong></div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="overview-tbl">
+<thead><tr>
+  <th style="width:80px">分類</th>
+  <th>商品名稱</th>
+  <th style="width:80px">DM</th>
+  <th style="width:80px">條款</th>
+</tr></thead>
+<tbody>
+<tr><td rowspan="33" class="col-tab" style="background:#e8f5e9;color:#2e7d32">醫療險</td><td class="col-name">凱基人壽<span class="prod-name">溢享增心</span>長期照顧終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140201_mahuca_ag_11405.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuca.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">享安心</span>長期照顧終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140202_legohg_ag_11405.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legohg.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">享放心</span>長期照顧終身健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140204_majiyb_ag_11405.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiyb.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">享順心</span>長期照顧終身健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140227_mahuha_ag_1140812.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuha.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">心安心照護</span>終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140085_legoeh_ag.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoeh.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">智由行照護</span>終身保險(2020)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140089_legoye_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoye.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">健康樂活醫療</span>終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140090_mahuab_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuab.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">元氣樂活</span>終身醫療健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140269_aahrl_ag_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahrl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">安心樂高</span>終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140096_legoae_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoae.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">日日保</span>住院日額健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140116_legoqa_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legoqa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">樂活雙享</span>住院醫療終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150124_abhsr_ag_1150416.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/abhsr.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">永享樂活</span>住院醫療定期保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140117_majidb_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majidb.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">心康泰</span>住院醫療限額給付健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140119_mahuga_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuga.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">超放心自負額</span>住院醫療健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140209__aahsr_ag_1140625.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahsr.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">新</span>住院醫療定額型定期健康保險附約(97)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/khlr.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/khlr.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">新康健</span>終身防癌健康保險(97)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140098_mscn_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mscn.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">真康健</span>癌症定期健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140145__aaddc_ag_1140123.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aaddc.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">新活力</span>癌症定期健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140171__abddc_ag_1140123.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/abddc.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽好活力一年期防癌健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140101_majixa_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majixa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">新</span>癌症五年定期醫療保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiqa.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiqa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">醫卡幸福</span>重大傷病保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150087_mahuea_ag_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuea.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">醫卡新安</span>重大傷病終身健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140107_majizb_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majizb.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">真心守護</span>重大傷病保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1150089_mahufb_ag_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahufb.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">醫卡守護</span>重大傷病定期健康保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140139_aaddm_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aaddm.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">醫卡健康一年期</span>重大傷病健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140109_majiea_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiea.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">重大疾病暨特定傷病</span>定期健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140120_yddr_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/yddr.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">重大疾病</span>終身健康保險附約(乙型)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legold.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/legold.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">e同幸福一年期</span>重大疾病健康保險(甲型)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddab.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddab.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">e同幸福</span>定期重大疾病健康保險(甲型)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddba.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/meddba.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">超術配</span>手術終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140252__mahuia_ag_1141012.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/mahuia.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">安心</span>手術終身保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140112_majimc_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majimc.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">好術配</span>手術定期健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140114_majiua_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/majiua.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">真術配一年期</span>手術健康保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/health/pldl1140211__aahop_ag_1140725.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/health/aahop.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td rowspan="13" class="col-tab" style="background:#fff3e0;color:#bf360c">意外險</td><td class="col-name">凱基人壽<span class="prod-name">意百分</span>終身傷害暨兒童傷害失能保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150110_aaipa_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/aaipa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">一生平安</span>終身傷害暨兒童傷害失能保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150126__abipa_br_1150412.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/abipa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">好多意</span>終身傷害暨兒童傷害失能保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150120_mahuja_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/mahuja.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">新鑫如意</span>終身保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150091_majipb_ag_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majipb.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">勇健人生</span>傷害暨兒童意外骨折保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1140138_aaspa_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/aaspa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">好平安</span>傷害保險附約(110)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1140123_majioa_ag_1140101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majioa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">人身意外</span>傷害保險(110)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150111_adipa_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/adipa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">人身意外</span>傷害保險附約(110)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150112_epaa_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/epaa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">安心寶貝意外</span>傷害保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150114_majifc_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majifc.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">安心寶貝意外</span>傷害保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majigc.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majigc.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">安心寶貝意外</span>傷害失能保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/dm/injury/pldl1150115_majita_ag_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/majita.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">E安心</span>傷害保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/iipa.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/iipa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">e國民</span>小額傷害保險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/mepaaa.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/health/contract/accident/mepaaa.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td rowspan="30" class="col-tab" style="background:#e3f2fd;color:#1565c0">壽險</td><td class="col-name">凱基人壽<span class="prod-name">紅運富御</span>美元分紅終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150131___1150501.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/appspl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">紅運傳家</span>美元終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150036.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apogpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">美利成臻</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150100_1150123r.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/appdpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">美利盈家</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150132_1150501.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apprpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫長鴻</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150096___11501.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apozpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">享美鑫</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150029_apoupl_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apoupl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">美鑽添壽</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150053_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/aponpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">美利傳富</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150044_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apojpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫多利</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150074_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apocpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">多保倍</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150023.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apndpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">傳承守富</span>美元利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150061_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/aplrpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">金美年年</span>美元利率變動型終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150034.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apmzpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">享富年年</span>美元利率變動型終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150031_apmmpl_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apmmpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">悠退年年</span>美元利率變動型養老保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/rop/pldl1150057_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/rop/apnhpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">澳享人生</span>澳幣終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/apompl.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apompl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫旺來</span>利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150081_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apnlpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫利567</span>利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150077_apkepl_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apkepl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">天天有利</span>利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150009.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apkqtl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">天天開鑫</span>利率變動型終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150012_apktpl_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apktpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫安利得</span>利率變動型終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150075__1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apwhpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">年年168</span>利率變動型終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150025_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apnkpl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫享年年</span>終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150079___1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apoopl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">吉慶年年</span>終身保險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-with-coupon/pldl1150022.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-with-coupon/apnppl_.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">基業長傳</span>終身壽險－定期給付型</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150055__1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/apnapl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">傳富一生</span>終身壽險（定期給付型）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150063.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/epxipl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">全民</span>小額終身壽險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150017_fhjipl_1150101.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/ehjipl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">公教</span>小額終身壽險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150007_fpfppl.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/epfppl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">好喜悅</span>定期壽險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/term-life/pldl1150086.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/term-life/aplhpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">好喜福</span>定期壽險附約</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/term-life/pldl1150086.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/term-life/apmhpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">友保障</span>終身壽險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/dm/whole-life-protection/pldl1150008.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/life-refund/clause/whole-life-protection/dpgjpl.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td rowspan="8" class="col-tab" style="background:#fce4ec;color:#880e4f">投資型</td><td class="col-name">凱基人壽<span class="prod-name">活利鑫動</span>變額壽險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/aadesil_aadfsva_pldi1140057_ag_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/aadesil.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫鑫向榮</span>變額壽險（112）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1150004_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/bcbcril.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫旺九九</span>變額壽險（112）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1140054_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/cbzsil.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫旺九九</span>外幣變額壽險（112）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/pldi1140054_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpl/cbafsil.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">活利鑫動</span>變額年金保險</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpl/aadesil_aadfsva_pldi1140057_ag_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/aadfsva.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫旺九九</span>變額年金保險（112）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1140055_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/bnaasva.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">智富三贏</span>變額年金保險(104)</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1150003_1150401.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/cnmrva.pdf" target="_blank">條款 ↗</a></td></tr>
+<tr><td class="col-name">凱基人壽<span class="prod-name">鑫旺九九</span>外幣變額年金保險（112）</td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/dm/ilpa/pldi1140055_1141225.pdf" target="_blank">DM ↗</a></td><td class="col-link"><a href="https://www.kgilife.com.tw/zh-tw/-/media/files/kgil/product-overview/personal/investment/clause/ilpa/bnagsva.pdf" target="_blank">條款 ↗</a></td></tr>
+</tbody></table>
+  </div>
+</div>
+
+<footer>資料來源：凱基人壽官網 kgilife.com.tw｜已排除暫停銷售商品</footer>
+
+
+</body>
+</html>
